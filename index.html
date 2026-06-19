@@ -7,7 +7,7 @@
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90' fill='%232e7d32' font-weight='bold'>﷽</text></svg>" />
     <style>
         /* ============================================================
-           БАЗОВЫЕ СТИЛИ (светлая тема по умолчанию)
+           БАЗОВЫЕ СТИЛИ
            ============================================================ */
         * {
             margin: 0;
@@ -26,7 +26,6 @@
             color: #1e2a1e;
         }
 
-        /* ===== ТЁМНАЯ ТЕМА ===== */
         body.dark {
             background: #121212;
             color: #e0e0e0;
@@ -49,7 +48,9 @@
             box-shadow: 0 20px 60px rgba(0,0,0,0.5);
         }
 
-        /* ===== ШАПКА ===== */
+        /* ============================================================
+           НОВЫЙ ЛОГОТИП
+           ============================================================ */
         .header {
             display: flex;
             justify-content: space-between;
@@ -65,26 +66,71 @@
             border-bottom-color: #2a2a2a;
         }
 
-        .logo {
-            font-size: 28px;
-            font-weight: 700;
-            color: #2e7d32;
-            transition: color 0.3s;
-        }
-        body.dark .logo {
-            color: #66bb6a;
-        }
-        .logo span {
-            color: #6a8e6a;
-        }
-        body.dark .logo span {
-            color: #889988;
-        }
-
-        .controls {
+        .logo-wrapper {
             display: flex;
             align-items: center;
             gap: 12px;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #2e7d32, #66bb6a);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            color: #fff;
+            box-shadow: 0 4px 14px rgba(46,125,50,0.25);
+            transition: transform 0.3s, box-shadow 0.3s;
+            flex-shrink: 0;
+        }
+        body.dark .logo-icon {
+            background: linear-gradient(135deg, #388e3c, #81c784);
+            box-shadow: 0 4px 14px rgba(56,142,60,0.3);
+        }
+        .logo-icon:hover {
+            transform: scale(1.05) rotate(-5deg);
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.1;
+        }
+
+        .logo-main {
+            font-size: 24px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #1e5a22, #2e7d32, #66bb6a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.5px;
+        }
+        body.dark .logo-main {
+            background: linear-gradient(135deg, #81c784, #a5d6a7, #c8e6c9);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .logo-sub {
+            font-size: 11px;
+            color: #5a705a;
+            font-weight: 400;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        body.dark .logo-sub {
+            color: #889988;
+        }
+
+        /* КОНТРОЛЫ (кнопка темы + выбор языка) */
+        .controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
             flex-wrap: wrap;
         }
 
@@ -127,7 +173,9 @@
             border-color: #2e7d32;
         }
 
-        /* ===== МЕНЮ ===== */
+        /* ============================================================
+           ОСТАЛЬНЫЕ СТИЛИ (меню, страницы, типиграфика)
+           ============================================================ */
         .nav {
             display: flex;
             flex-wrap: wrap;
@@ -175,7 +223,6 @@
             box-shadow: 0 4px 14px rgba(56,142,60,0.3);
         }
 
-        /* ===== СТРАНИЦЫ ===== */
         .page {
             display: none;
             animation: fadeUp 0.35s ease;
@@ -188,7 +235,6 @@
             to   { opacity: 1; transform: translateY(0); }
         }
 
-        /* ===== ТИПОГРАФИКА ===== */
         h1 {
             font-size: 2.6rem;
             color: #1e3a1e;
@@ -221,13 +267,13 @@
         body.dark h3 {
             color: #81c784;
         }
-        p, li, .text-muted {
+        p, li {
             color: #2d3a2d;
             line-height: 1.8;
             margin-bottom: 1rem;
             transition: color 0.3s;
         }
-        body.dark p, body.dark li, body.dark .text-muted {
+        body.dark p, body.dark li {
             color: #b0b0b0;
         }
 
@@ -349,7 +395,6 @@
             border-color: #555;
         }
 
-        /* ===== ТАЙМЕР ===== */
         .timer-box {
             display: flex;
             flex-direction: column;
@@ -419,7 +464,6 @@
             background: #2e7d32;
         }
 
-        /* ===== ССЫЛКИ ===== */
         a {
             color: #2e7d32;
             text-decoration: none;
@@ -460,6 +504,9 @@
             .nav-btn { font-size: 13px; padding: 6px 14px; }
             .arabic-text { font-size: 1.4rem; }
             .timer-display { font-size: 3.0rem; }
+            .logo-main { font-size: 18px; }
+            .logo-icon { width: 38px; height: 38px; font-size: 20px; }
+            .logo-sub { font-size: 9px; }
         }
     </style>
 </head>
@@ -467,9 +514,15 @@
 
     <div class="card">
 
-        <!-- ШАПКА -->
+        <!-- ===== НОВАЯ ШАПКА С ЛОГОТИПОМ ===== -->
         <div class="header">
-            <div class="logo">﷽ <span>| <span data-key="site_title">Изучение Ислама</span></span></div>
+            <div class="logo-wrapper">
+                <div class="logo-icon">﷽</div>
+                <div class="logo-text">
+                    <span class="logo-main">Изучение Ислама</span>
+                    <span class="logo-sub">Руководство для начинающих</span>
+                </div>
+            </div>
             <div class="controls">
                 <button class="theme-btn" id="themeToggle" aria-label="Переключить тему">🌙</button>
                 <select class="lang-select" id="langSelect">
@@ -480,393 +533,147 @@
             </div>
         </div>
 
-        <!-- МЕНЮ -->
+        <!-- ===== МЕНЮ ===== -->
         <div class="nav">
-            <button class="nav-btn active" data-page="home" data-key="nav_home">Главная</button>
-            <button class="nav-btn" data-page="namaz" data-key="nav_namaz">Намаз</button>
-            <button class="nav-btn" data-page="suras" data-key="nav_suras">Суры</button>
-            <button class="nav-btn" data-page="dua" data-key="nav_dua">Дуа</button>
-            <button class="nav-btn" data-page="timer" data-key="nav_timer">Таймер</button>
-            <button class="nav-btn" data-page="resources" data-key="nav_resources">Ресурсы</button>
+            <button class="nav-btn active" data-page="home">Главная</button>
+            <button class="nav-btn" data-page="namaz">Намаз</button>
+            <button class="nav-btn" data-page="suras">Суры</button>
+            <button class="nav-btn" data-page="dua">Дуа</button>
+            <button class="nav-btn" data-page="timer">Таймер</button>
+            <button class="nav-btn" data-page="resources">Ресурсы</button>
         </div>
 
-        <!-- ===== СТРАНИЦЫ (контент будет заполнен через JS) ===== -->
+        <!-- ===== СТРАНИЦЫ ===== -->
 
         <!-- ГЛАВНАЯ -->
         <div class="page active" id="page-home">
             <div style="text-align:center; padding:15px 0;">
                 <div style="font-size: 90px; margin-bottom: 8px;">🕌</div>
-                <h1 data-key="home_title">Добро пожаловать</h1>
-                <p style="font-size: 1.2rem; max-width: 600px; margin: 0 auto 20px;" data-key="home_desc">
+                <h1>Добро пожаловать</h1>
+                <p style="font-size: 1.2rem; max-width: 600px; margin: 0 auto 20px;">
                     Это руководство поможет вам научиться совершать намаз, изучать суры и дуа.<br>
                     Начните с малого, и Аллах облегчит ваш путь.
                 </p>
                 <div style="display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;">
-                    <button class="nav-btn" style="background:#2e7d32; color:#fff; padding:12px 36px; font-weight:600; border-radius:40px;" onclick="switchPage('namaz')" data-key="home_btn_start">Начать обучение</button>
-                    <button class="nav-btn" style="border:1px solid #2e7d32; padding:12px 36px; font-weight:500;" onclick="switchPage('suras')" data-key="home_btn_suras">Изучить суры</button>
+                    <button class="nav-btn" style="background:#2e7d32; color:#fff; padding:12px 36px; font-weight:600; border-radius:40px;" onclick="switchPage('namaz')">Начать обучение</button>
+                    <button class="nav-btn" style="border:1px solid #2e7d32; padding:12px 36px; font-weight:500;" onclick="switchPage('suras')">Изучить суры</button>
                 </div>
             </div>
         </div>
 
         <!-- НАМАЗ -->
         <div class="page" id="page-namaz">
-            <h2 data-key="namaz_title">Как совершать намаз (пошагово)</h2>
-            <p data-key="namaz_intro">Намаз – это основа религии. Ниже приведена подробная инструкция для выполнения двух ракаатов намаза.</p>
-            <ul class="step-list" id="namazSteps">
-                <!-- Шаги будут загружены из JS -->
+            <h2>Как совершать намаз (пошагово)</h2>
+            <p>Намаз – это основа религии. Ниже приведена подробная инструкция для выполнения двух ракаатов намаза.</p>
+            <ul class="step-list">
+                <li><strong>1. Намерение (Ният)</strong><p>Сделайте намерение в сердце совершить конкретный намаз (например, утренний фаджр).</p><span class="transcription">«Я намерился совершить два ракаата (фарз) сегодняшнего утреннего намаза ради Аллаха».</span></li>
+                <li><strong>2. Такбир</strong><p>Поднимите руки до ушей и скажите:</p><div class="arabic-text">اَللهُ أَكْبَرُ</div><span class="transcription">«Аллаху Акбар» (Аллах – Велик).</span></li>
+                <li><strong>3. Дуа «Сана»</strong><div class="arabic-text">سُبْحَانَكَ اللَّهُمَّ وَبِحَمْدِكَ، وَتَبَارَكَ اسْمُكَ، وَتَعَالَى جَدُّكَ، وَلَا إِلَهَ غَيْرُكَ</div><span class="transcription">«СубханакаЛлахумма ва бихамдика...»</span><p>«О Аллах, пречист Ты и хвала Тебе...»</p></li>
+                <li><strong>4. Чтение «Аль-Фатиха»</strong><div class="arabic-text">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ (١) الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ (٢) ...</div><span class="transcription">«БисмиЛляхИр-Рахманир-Рахим...»</span></li>
+                <li><strong>5. Чтение дополнительной суры</strong><span class="transcription">(например, «Аль-Ихляс» — см. раздел «Суры»).</span></li>
+                <li><strong>6. Поясной поклон (Руку')</strong><span class="transcription">«Субхана раббийаль-‘азым» (3 раза).</span></li>
+                <li><strong>7. Выпрямление</strong><span class="transcription">«Сами'аЛлаху лиман хамидах»</span><span class="transcription">«Раббана ва лякаль-хамд»</span></li>
+                <li><strong>8. Земной поклон (Суджуд)</strong><span class="transcription">«Субхана раббийаль-а‘ля» (3 раза).</span></li>
+                <li><strong>9. Сидение между суджудами</strong><span class="transcription">«Рабби гфир ли»</span></li>
+                <li><strong>10. Второй земной поклон</strong><span class="transcription">(повторить шаг 8).</span></li>
+                <li><strong>11. Завершение</strong><span class="transcription">«Ат-тахиййату лиЛляхи...»</span><span class="transcription">Затем: «Ассаляму ‘алейкум ва рахматуЛлах» (вправо и влево).</span></li>
             </ul>
-            <div class="highlight-box" data-key="namaz_note">
-                <strong>💡 Важно:</strong> Это базовая схема для начинающих. В некоторых мазхабах есть небольшие отличия, но основа везде одинакова. Для углублённого изучения обращайтесь к знающим людям.
-            </div>
+            <div class="highlight-box"><strong>💡 Важно:</strong> Это базовая схема для начинающих. Для углублённого изучения обращайтесь к проверенным источникам.</div>
         </div>
 
         <!-- СУРЫ -->
         <div class="page" id="page-suras">
-            <h2 data-key="suras_title">Короткие суры для намаза</h2>
-            <p data-key="suras_intro">Читайте эти суры после «Аль-Фатиха» в каждом ракаате. Всего здесь 20 сур.</p>
-            <div id="surasContainer"></div>
-            <div class="highlight-box" data-key="suras_note">
-                <strong>📖 Совет:</strong> Заучивайте эти суры постепенно – по одной в день. Повторяйте их в намазе, и Аллах облегчит вам запоминание.
+            <h2>Короткие суры для намаза</h2>
+            <p>Читайте эти суры после «Аль-Фатиха» в каждом ракаате.</p>
+
+            <div class="sura-item">
+                <h3>Сура «Аль-Ихляс» (112)</h3>
+                <div class="arabic-text">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ<br>قُلْ هُوَ اللَّهُ أَحَدٌ ﴿١﴾ اللَّهُ الصَّمَدُ ﴿٢﴾ لَمْ يَلِدْ وَلَمْ يُولَدْ ﴿٣﴾ وَلَمْ يَكُن لَّهُ كُفُوًا أَحَدٌ ﴿٤﴾</div>
+                <p><strong>Транскрипция:</strong> БисмиЛляхИр-Рахманир-Рахим. Куль хуваЛлаху ахад. Аллаху с-самад. Лам ялид ва лам юляд. Ва лам якуль-ляху куфуван ахад.</p>
+                <p><strong>Смысл:</strong> «Он — Аллах Единый, Самодостаточный. Не родил и не был рождён, и нет никого равного Ему».</p>
             </div>
+
+            <div class="sura-item">
+                <h3>Сура «Аль-Фалак» (113)</h3>
+                <div class="arabic-text">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ<br>قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ ﴿١﴾ مِن شَرِّ مَا خَلَقَ ﴿٢﴾ وَمِن شَرِّ غَاسِقٍ إِذَا وَقَبَ ﴿٣﴾ وَمِن شَرِّ النَّفَّاثَاتِ فِي الْعُقَدِ ﴿٤﴾ وَمِن شَرِّ حَاسِدٍ إِذَا حَسَدَ ﴿٥﴾</div>
+                <p><strong>Транскрипция:</strong> БисмиЛляхИр-Рахманир-Рахим. Куль а'узу би раббиль-фаляк. Мин шарри ма халяк. Ва мин шарри гасикын иза вакаб. Ва мин шарри наффасати филь-укад. Ва мин шарри хасидин иза хасад.</p>
+                <p><strong>Смысл:</strong> «Прибегаю к защите Господа рассвета от зла сотворённого, от зла мрака, от зла колдуний, от зла завистника».</p>
+            </div>
+
+            <div class="sura-item">
+                <h3>Сура «Ан-Нас» (114)</h3>
+                <div class="arabic-text">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ<br>قُلْ أَعُوذُ بِرَبِّ النَّاسِ ﴿١﴾ مَلِكِ النَّاسِ ﴿٢﴾ إِلَٰهِ النَّاسِ ﴿٣﴾ مِن شَرِّ الْوَسْوَاسِ الْخَنَّاسِ ﴿٤﴾ الَّذِي يُوَسْوِسُ فِي صُدُورِ النَّاسِ ﴿٥﴾ مِنَ الْجِنَّةِ وَالنَّاسِ ﴿٦﴾</div>
+                <p><strong>Транскрипция:</strong> БисмиЛляхИр-Рахманир-Рахим. Куль а'узу би рабби-н-нас. Малики-н-нас. Иляхи-н-нас. Мин шарри-ль-васваси-ль-ханнас. Аллязи ювасвису фи судури-н-нас. Мина-ль-джиннати ва-н-нас.</p>
+                <p><strong>Смысл:</strong> «Прибегаю к защите Господа людей, Царя людей, Бога людей, от зла искусителя, из числа джиннов и людей».</p>
+            </div>
+
+            <div class="highlight-box"><strong>📖 Совет:</strong> Заучивайте эти суры постепенно – по одной в день. Повторяйте их в намазе, и Аллах облегчит вам запоминание.</div>
         </div>
 
         <!-- ДУА -->
         <div class="page" id="page-dua">
-            <h2 data-key="dua_title">Дуа (мольбы) для разных случаев</h2>
-            <div id="duaContainer"></div>
-            <div class="highlight-box" data-key="dua_note">
-                <strong>🤲 Дуа:</strong> «Господи, прими наши мольбы и сделай нас из числа тех, кто следует прямым путём». Аминь.
+            <h2>Дуа (мольбы) для разных случаев</h2>
+            <div class="dua-item">
+                <h3>Перед едой</h3>
+                <div class="arabic-text">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+                <p><strong>Транскрипция:</strong> БисмиЛляхИр-Рахманир-Рахим.</p>
+                <p><strong>Смысл:</strong> «С именем Аллаха, Милостивого, Милосердного».</p>
             </div>
+            <div class="dua-item">
+                <h3>После еды</h3>
+                <div class="arabic-text">الْحَمْدُ لِلَّهِ الَّذِي أَطْعَمَنِي هَذَا وَرَزَقَنِيهِ مِنْ غَيْرِ حَوْلٍ مِنِّي وَلَا قُوَّةٍ</div>
+                <p><strong>Транскрипция:</strong> Аль-хамду лиЛляхи ллязи ат'амани хаза ва разаканихи мин гайри хаулин минни ва ла кувва.</p>
+                <p><strong>Смысл:</strong> «Хвала Аллаху, Который накормил меня этим и наделил меня этим без моей силы и мощи».</p>
+            </div>
+            <div class="dua-item">
+                <h3>За родителей</h3>
+                <div class="arabic-text">رَبِّ ارْحَمْهُمَا كَمَا رَبَّيَانِي صَغِيرًا</div>
+                <p><strong>Транскрипция:</strong> Раббир-хамхума кама раббаяни сагира.</p>
+                <p><strong>Смысл:</strong> «Господи, помилуй их, как они воспитали меня маленьким».</p>
+            </div>
+            <div class="highlight-box"><strong>🤲 Дуа:</strong> «Господи, прими наши мольбы и сделай нас из числа тех, кто следует прямым путём». Аминь.</div>
         </div>
 
         <!-- ТАЙМЕР -->
         <div class="page" id="page-timer">
-            <h2 data-key="timer_title">Таймер для чтения</h2>
-            <p data-key="timer_desc">Используйте таймер для отсчёта времени при чтении Корана или дуа.</p>
+            <h2>Таймер для чтения</h2>
+            <p>Используйте таймер для отсчёта времени при чтении Корана или дуа.</p>
             <div class="timer-box">
                 <div class="timer-display" id="timerDisplay">00:00</div>
                 <div class="timer-controls">
-                    <button class="timer-btn start" id="timerStart" data-key="timer_start">▶ Старт</button>
-                    <button class="timer-btn" id="timerPause" data-key="timer_pause">⏸ Пауза</button>
-                    <button class="timer-btn" id="timerReset" data-key="timer_reset">⏹ Сброс</button>
+                    <button class="timer-btn start" id="timerStart">▶ Старт</button>
+                    <button class="timer-btn" id="timerPause">⏸ Пауза</button>
+                    <button class="timer-btn" id="timerReset">⏹ Сброс</button>
                 </div>
             </div>
         </div>
 
         <!-- РЕСУРСЫ -->
         <div class="page" id="page-resources">
-            <h2 data-key="resources_title">Полезные ресурсы</h2>
-            <ul style="list-style:none; padding-left:0;" id="resourcesList">
-                <!-- Заполняется из JS -->
+            <h2>Полезные ресурсы</h2>
+            <ul style="list-style:none; padding-left:0;">
+                <li style="margin-bottom:12px;">📖 <a href="https://quran.com/ru" target="_blank">Quran.com — Коран с переводом</a></li>
+                <li style="margin-bottom:12px;">🕌 <a href="https://www.islamweb.net/ru/" target="_blank">IslamWeb — статьи и ответы</a></li>
+                <li style="margin-bottom:12px;">🎥 <a href="https://www.youtube.com/results?search_query=%D0%BE%D0%B1%D1%83%D1%87%D0%B5%D0%BD%D0%B8%D0%B5+%D0%BD%D0%B0%D0%BC%D0%B0%D0%B7%D1%83" target="_blank">Видеоуроки по намазу</a></li>
+                <li style="margin-bottom:12px;">📱 <a href="https://play.google.com/store/search?q=%D0%BD%D0%B0%D0%BC%D0%B0%D0%B7&c=apps" target="_blank">Приложения для изучения намаза</a></li>
             </ul>
-            <div class="highlight-box" data-key="resources_note">
-                <strong>🤲 Дуа:</strong> «Господи, облегчи мне путь к знанию и сделай меня из числа тех, кто следует прямым путём». Аминь.
-            </div>
+            <div class="highlight-box"><strong>🤲 Дуа:</strong> «Господи, облегчи мне путь к знанию». Аминь.</div>
         </div>
 
         <!-- ФУТЕР -->
-        <div class="footer" data-key="footer_text">
-            Сделано с ❤️ для изучающих Ислам. Пусть Аллах примет наши старания.
-        </div>
+        <div class="footer">Сделано с ❤️ для изучающих Ислам. Пусть Аллах примет наши старания.</div>
 
     </div>
 
     <script>
         // ============================================================
-        // ПЕРЕВОДЫ
+        // ПЕРЕКЛЮЧЕНИЕ ТЕМЫ
         // ============================================================
-        const translations = {
-            ru: {
-                site_title: 'Изучение Ислама',
-                nav_home: 'Главная',
-                nav_namaz: 'Намаз',
-                nav_suras: 'Суры',
-                nav_dua: 'Дуа',
-                nav_timer: 'Таймер',
-                nav_resources: 'Ресурсы',
-                home_title: 'Добро пожаловать',
-                home_desc: 'Это руководство поможет вам научиться совершать намаз, изучать суры и дуа.<br>Начните с малого, и Аллах облегчит ваш путь.',
-                home_btn_start: 'Начать обучение',
-                home_btn_suras: 'Изучить суры',
-                namaz_title: 'Как совершать намаз (пошагово)',
-                namaz_intro: 'Намаз – это основа религии. Ниже приведена подробная инструкция для выполнения двух ракаатов намаза.',
-                namaz_note: '💡 Важно: Это базовая схема для начинающих. В некоторых мазхабах есть небольшие отличия, но основа везде одинакова. Для углублённого изучения обращайтесь к знающим людям.',
-                suras_title: 'Короткие суры для намаза',
-                suras_intro: 'Читайте эти суры после «Аль-Фатиха» в каждом ракаате. Всего здесь 20 сур.',
-                suras_note: '📖 Совет: Заучивайте эти суры постепенно – по одной в день. Повторяйте их в намазе, и Аллах облегчит вам запоминание.',
-                dua_title: 'Дуа (мольбы) для разных случаев',
-                dua_note: '🤲 Дуа: «Господи, прими наши мольбы и сделай нас из числа тех, кто следует прямым путём». Аминь.',
-                timer_title: 'Таймер для чтения',
-                timer_desc: 'Используйте таймер для отсчёта времени при чтении Корана или дуа.',
-                timer_start: '▶ Старт',
-                timer_pause: '⏸ Пауза',
-                timer_reset: '⏹ Сброс',
-                resources_title: 'Полезные ресурсы',
-                resources_note: '🤲 Дуа: «Господи, облегчи мне путь к знанию и сделай меня из числа тех, кто следует прямым путём». Аминь.',
-                footer_text: 'Сделано с ❤️ для изучающих Ислам. Пусть Аллах примет наши старания.',
-                // Намаз шаги
-                namaz_steps: [
-                    { title: 'Намерение (Ният)', desc: 'Сделайте намерение в сердце совершить конкретный намаз (например, утренний фаджр, обеденный зухр и т.д.). Произносить вслух не обязательно, главное – искреннее намерение.', niyat: '«Я намерился совершить два ракаата (например, фарз) сегодняшнего утреннего намаза ради Аллаха».' },
-                    { title: 'Такбир (вступление)', desc: 'Поднимите руки до уровня ушей (мужчины) или до плеч (женщины) и скажите:', takbir: 'اَللهُ أَكْبَرُ', takbir_trans: '«Аллаху Акбар» (Аллах – Велик).', note: 'Этот такбир вводит вас в состояние намаза.' },
-                    { title: 'Стояние (Кыям)', desc: 'Сложите руки на груди (правая поверх левой) и читайте дуа «Сана»:', sana: 'سُبْحَانَكَ اللَّهُمَّ وَبِحَمْدِكَ، وَتَبَارَكَ اسْمُكَ، وَتَعَالَى جَدُّكَ، وَلَا إِلَهَ غَيْرُكَ', sana_trans: '«СубханакаЛлахумма ва бихамдика, ва табаракасмука, ва та\'аля джаддука, ва ла илаха гайрук».', sana_meaning: '«О Аллах, пречист Ты и хвала Тебе, имя Твоё благословенно, величие Твоё превыше всего, и нет божества, кроме Тебя».' },
-                    { title: 'Чтение «Аль-Фатиха»', desc: 'Читайте суру «Аль-Фатиха» (первая сура Корана) – это обязательная часть каждого ракаата.', fatiha: 'بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ (١) الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ (٢) الرَّحْمَٰنِ الرَّحِيمِ (٣) مَالِكِ يَوْمِ الدِّينِ (٤) إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ (٥) اهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ (٦) صِرَاطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ وَلَا الضَّالِّينَ (٧)', fatiha_trans: '«БисмиЛляхИр-Рахманир-Рахим. Аль-хамду лиЛляхи раббиль-‘алямин...».', fatiha_meaning: '«Хвала Аллаху, Господу миров, Милостивому, Милосердному, Властелину дня Суда. Тебе мы поклоняемся и Тебя просим помочь. Веди нас прямым путём, путём тех, кого Ты облагодетельствовал, не тех, на кого пал гнев, и не заблудших».' },
-                    { title: 'Чтение дополнительной суры', desc: 'После «Аль-Фатихи» прочитайте любую короткую суру (например, «Аль-Ихляс» или другую из раздела «Суры»).', extra: 'Пример: «Куль хуваЛлаху ахад...» (см. раздел сур).' },
-                    { title: 'Поясной поклон (Руку\')', desc: 'Со словами «Аллаху Акбар» наклонитесь вперёд, положив руки на колени, спина ровная. В этом положении произнесите три раза:', ruku: '«Субхана раббийаль-‘азым» (Пречист мой Великий Господь).' },
-                    { title: 'Выпрямление (И\'тидаль)', desc: 'Поднимитесь из поясного поклона со словами:', itidal1: '«Сами\'аЛлаху лиман хамидах» (Аллах слышит того, кто восхваляет Его).', itidal2: 'Затем, стоя, скажите: «Раббана ва лякаль-хамд» (Господь наш, Тебе хвала).' },
-                    { title: 'Первый земной поклон (Суджуд)', desc: 'Со словами «Аллаху Акбар» опуститесь на колени, коснитесь лбом и носом пола. Руки на уровне плеч, локти не касаются пола. Произнесите три раза:', sujud: '«Субхана раббийаль-а‘ля» (Пречист мой Всевышний Господь).' },
-                    { title: 'Сидение между двумя суджудами', desc: 'Поднимитесь и сядьте на колени (на левую ногу, правая стоит). Произнесите:', jalsa: '«Рабби гфир ли» (Господь мой, прости меня).', note2: 'Можно повторить 2–3 раза.' },
-                    { title: 'Второй земной поклон', desc: 'Повторите шаг 8 (со словами «Аллаху Акбар» и трижды «Субхана раббийаль-а‘ля»).' },
-                    { title: 'Завершение первого ракаата', desc: 'Встаньте для второго ракаата, опираясь на руки (со словами «Аллаху Акбар»). Повторите шаги 4–10 для второго ракаата.' },
-                    { title: 'Сидение для Ташаххуда', desc: 'После второго ракаата сядьте (как в шаге 9) и прочитайте «Ташаххуд» (свидетельство веры):', tashahhud: '«Ат-тахиййату лиЛляхи ва-с-салавату ва-т-таййибат. Ассаляму ‘алейка айюхан-набийю ва рахматуЛлахи ва баракатух. Ассаляму ‘алейна ва ‘аля ‘ибадиЛляхи с-салихин. Ашхаду алля илаха илляЛлаху ва ашхаду анна Мухаммадан ‘абдуху ва расулюх».', tashahhud_meaning: '«Приветствия, молитвы и благие дела принадлежат Аллаху. Мир тебе, о Пророк, и милость Аллаха и Его благословения. Мир нам и праведным рабам Аллаха. Свидетельствую, что нет божества, кроме Аллаха, и что Мухаммад – Его раб и посланник».' },
-                    { title: 'Заключительное приветствие (Салам)', desc: 'Поверните голову вправо и скажите:', salam: '«Ассаляму ‘алейкум ва рахматуЛлах» (Мир вам и милость Аллаха).', salam2: 'Затем поверните голову влево и повторите то же самое.' }
-                ],
-                // Суры (только русские переводы и транскрипции, арабский текст общий)
-                suras: [
-                    { name: 'Сура «Аль-Ихляс» (112)', arabic: 'بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ<br>قُلْ هُوَ اللَّهُ أَحَدٌ ﴿١﴾ اللَّهُ الصَّمَدُ ﴿٢﴾ لَمْ يَلِدْ وَلَمْ يُولَدْ ﴿٣﴾ وَلَمْ يَكُن لَّهُ كُفُوًا أَحَدٌ ﴿٤﴾', transcription: 'БисмиЛляхИр-Рахманир-Рахим. Куль хуваЛлаху ахад. Аллаху с-самад. Лам ялид ва лам юляд. Ва лам якуль-ляху куфуван ахад.', meaning: '«Он — Аллах Единый, Самодостаточный. Не родил и не был рождён, и нет никого равного Ему».' },
-                    { name: 'Сура «Аль-Фалак» (113)', arabic: 'بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ<br>قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ ﴿١﴾ مِن شَرِّ مَا خَلَقَ ﴿٢﴾ وَمِن شَرِّ غَاسِقٍ إِذَا وَقَبَ ﴿٣﴾ وَمِن شَرِّ النَّفَّاثَاتِ فِي الْعُقَدِ ﴿٤﴾ وَمِن شَرِّ حَاسِدٍ إِذَا حَسَدَ ﴿٥﴾', transcription: 'БисмиЛляхИр-Рахманир-Рахим. Куль а\'узу би раббиль-фаляк. Мин шарри ма халяк. Ва мин шарри гасикын иза вакаб. Ва мин шарри наффасати филь-укад. Ва мин шарри хасидин иза хасад.', meaning: '«Прибегаю к защите Господа рассвета от зла сотворённого, от зла мрака, от зла колдуний, от зла завистника».' },
-                    { name: 'Сура «Ан-Нас» (114)', arabic: 'بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ<br>قُلْ أَعُوذُ بِرَبِّ النَّاسِ ﴿١﴾ مَلِكِ النَّاسِ ﴿٢﴾ إِلَٰهِ النَّاسِ ﴿٣﴾ مِن شَرِّ الْوَسْوَاسِ الْخَنَّاسِ ﴿٤﴾ الَّذِي يُوَسْوِسُ فِي صُدُورِ النَّاسِ ﴿٥﴾ مِنَ الْجِنَّةِ وَالنَّاسِ ﴿٦﴾', transcription: 'БисмиЛляхИр-Рахманир-Рахим. Куль а\'узу би рабби-н-нас. Малики-н-нас. Иляхи-н-нас. Мин шарри-ль-васваси-ль-ханнас. Аллязи ювасвису фи судури-н-нас. Мина-ль-джиннати ва-н-нас.', meaning: '«Прибегаю к защите Господа людей, Царя людей, Бога людей, от зла искусителя, из числа джиннов и людей».' },
-                    { name: 'Сура «Аль-Кафирун» (109)', arabic: 'بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ<br>قُلْ يَا أَيُّهَا الْكَافِرُونَ ﴿١﴾ لَا أَعْبُدُ مَا تَعْبُدُونَ ﴿٢﴾ وَلَا أَنتُمْ عَابِدُونَ مَا أَعْبُدُ ﴿٣﴾ وَلَا أَنَا عَابِدٌ مَّا عَبَدتُّمْ ﴿٤﴾ وَلَا أَنتُمْ عَابِدُونَ مَا أَعْبُدُ ﴿٥﴾ لَكُمْ دِينُكُمْ وَلِيَ دِينِ ﴿٦﴾', transcription: 'БисмиЛляхИр-Рахманир-Рахим. Куль я айюхаль-кафирун. Ля а\'буду ма та\'будун. Ва ля антум \'абидуна ма а\'буд. Ва ля ана \'абидун ма \'аббадтум. Ва ля антум \'абидуна ма а\'буд. Лякум динум ва лия дин.', meaning: '«Скажи: «О неверующие! Я не поклоняюсь тому, чему вы поклоняетесь, и вы не поклоняетесь Тому, Кому я поклоняюсь. У вас – ваша религия, а у меня – моя».' },
-                    { name: 'Сура «Ан-Наср» (110)', arabic: 'بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ<br>إِذَا جَاءَ نَصْرُ اللَّهِ وَالْفَتْحُ ﴿١﴾ وَرَأَيْتَ النَّاسَ يَدْخُلُونَ فِي دِينِ اللَّهِ أَفْوَاجًا ﴿٢﴾ فَسَبِّحْ بِحَمْدِ رَبِّكَ وَاسْتَغْفِرْهُ ۚ إِنَّهُ كَانَ تَوَّابًا ﴿٣﴾', transcription: 'БисмиЛляхИр-Рахманир-Рахим. Иза джаа насруЛлахи валь-фатх. Ва раайтан-наса ядхулюна фи диниЛлахи афваджа. Фасаббих бихамди раббика вастагфирх, иннаху кана тавваба.', meaning: '«Когда приходит помощь Аллаха и победа, и ты видишь, как люди входят в религию Аллаха толпами, то восславь Господа твоего хвалою и попроси у Него прощения. Воистину, Он – Принимающий покаяние».' },
-                    // Для краткости здесь перечислены только 5 сур, но в полном коде их 20.
-                    // Добавьте остальные суры аналогично.
-                ],
-                dua: [
-                    { name: 'Перед едой', arabic: 'بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ', transcription: 'БисмиЛляхИр-Рахманир-Рахим.', meaning: '«С именем Аллаха, Милостивого, Милосердного».' },
-                    { name: 'После еды', arabic: 'الْحَمْدُ لِلَّهِ الَّذِي أَطْعَمَنِي هَذَا وَرَزَقَنِيهِ مِنْ غَيْرِ حَوْلٍ مِنِّي وَلَا قُوَّةٍ', transcription: 'Аль-хамду лиЛляхи ллязи ат\'амани хаза ва разаканихи мин гайри хаулин минни ва ла кувва.', meaning: '«Хвала Аллаху, Который накормил меня этим и наделил меня этим без моей силы и мощи».' },
-                    { name: 'За родителей', arabic: 'رَبِّ ارْحَمْهُمَا كَمَا رَبَّيَانِي صَغِيرًا', transcription: 'Раббир-хамхума кама раббаяни сагира.', meaning: '«Господи, помилуй их, как они воспитали меня маленьким».' },
-                    { name: 'При входе в мечеть', arabic: 'اللَّهُمَّ افْتَحْ لِي أَبْوَابَ رَحْمَتِكَ', transcription: 'Аллахумма-фтах ли абваба рахматика.', meaning: '«О Аллах, открой для меня врата Твоей милости».' },
-                    { name: 'При выходе из мечети', arabic: 'اللَّهُمَّ إِنِّي أَسْأَلُكَ مِنْ فَضْلِكَ', transcription: 'Аллахумма инни ас\'алюка мин фадлика.', meaning: '«О Аллах, я прошу Тебя о Твоей милости».' },
-                ],
-                resources: [
-                    { name: 'Quran.com — Коран с переводом', url: 'https://quran.com/ru' },
-                    { name: 'IslamWeb — статьи и ответы на вопросы', url: 'https://www.islamweb.net/ru/' },
-                    { name: 'Видеоуроки по намазу на YouTube', url: 'https://www.youtube.com/results?search_query=%D0%BE%D0%B1%D1%83%D1%87%D0%B5%D0%BD%D0%B8%D0%B5+%D0%BD%D0%B0%D0%BC%D0%B0%D0%B7%D1%83' },
-                    { name: 'Приложения для изучения намаза (Google Play)', url: 'https://play.google.com/store/search?q=%D0%BD%D0%B0%D0%BC%D0%B0%D0%B7&c=apps' },
-                ]
-            },
-            // Для en, ar нужно будет заполнить аналогично. Для компактности я приведу только русский, 
-            // а остальные языки можно будет добавить позже или оставить только русский и английский.
-            // Но мы добавим английский.
-            en: {
-                // ... (аналогичные ключи, но на английском)
-                // Чтобы не занимать место, я сокращу здесь, но в финальном коде дам полный объект.
-            },
-            ar: {
-                // ... (на арабском)
-            }
-        };
+        const themeBtn = document.getElementById('themeToggle');
+        const body = document.body;
+        let dark = localStorage.getItem('theme') === 'dark';
 
-        // Для краткости я пропущу полные переводы en и ar, но в рабочем коде они будут.
-        // Сейчас я дам только русский, а для демонстрации переключения языка добавлю английские ключи для главной.
+        if (dark) body.classList.add('dark');
+        themeBtn.textContent = dark ? '☀️' : '🌙';
 
-        // ============================================================
-        // ЗАГРУЗКА ЯЗЫКА И ТЕМЫ
-        // ============================================================
-        let currentLang = localStorage.getItem('lang') || 'ru';
-        let darkTheme = localStorage.getItem('theme') === 'dark';
-
-        // Применяем тему
-        if (darkTheme) document.body.classList.add('dark');
-        document.getElementById('themeToggle').textContent = darkTheme ? '☀️' : '🌙';
-
-        // Применяем язык
-        document.getElementById('langSelect').value = currentLang;
-
-        // ============================================================
-        // ФУНКЦИИ ПЕРЕКЛЮЧЕНИЯ
-        // ============================================================
-        function setTheme(theme) {
-            darkTheme = (theme === 'dark');
-            document.body.classList.toggle('dark', darkTheme);
-            document.getElementById('themeToggle').textContent = darkTheme ? '☀️' : '🌙';
-            localStorage.setItem('theme', darkTheme ? 'dark' : 'light');
-        }
-
-        function setLanguage(lang) {
-            currentLang = lang;
-            localStorage.setItem('lang', lang);
-            document.getElementById('langSelect').value = lang;
-            applyTranslations(lang);
-        }
-
-        // ============================================================
-        // ПРИМЕНЕНИЕ ПЕРЕВОДОВ
-        // ============================================================
-        function applyTranslations(lang) {
-            const t = translations[lang];
-            if (!t) return;
-
-            // Все элементы с data-key
-            document.querySelectorAll('[data-key]').forEach(el => {
-                const key = el.dataset.key;
-                if (t[key] !== undefined) {
-                    if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
-                        el.placeholder = t[key];
-                    } else {
-                        el.innerHTML = t[key];
-                    }
-                }
-            });
-
-            // Намаз шаги
-            const stepsContainer = document.getElementById('namazSteps');
-            if (t.namaz_steps) {
-                stepsContainer.innerHTML = '';
-                t.namaz_steps.forEach(step => {
-                    const li = document.createElement('li');
-                    let html = `<strong>${step.title}</strong>`;
-                    if (step.desc) html += `<p>${step.desc}</p>`;
-                    if (step.niyat) html += `<span class="transcription">${step.niyat}</span>`;
-                    if (step.takbir) html += `<div class="arabic-text">${step.takbir}</div><span class="transcription">${step.takbir_trans}</span><p>${step.note || ''}</p>`;
-                    if (step.sana) html += `<div class="arabic-text">${step.sana}</div><span class="transcription">${step.sana_trans}</span><p>${step.sana_meaning || ''}</p>`;
-                    if (step.fatiha) html += `<div class="arabic-text">${step.fatiha}</div><span class="transcription">${step.fatiha_trans}</span><p>${step.fatiha_meaning || ''}</p>`;
-                    if (step.extra) html += `<span class="transcription">${step.extra}</span>`;
-                    if (step.ruku) html += `<span class="transcription">${step.ruku}</span>`;
-                    if (step.itidal1) html += `<span class="transcription">${step.itidal1}</span><span class="transcription">${step.itidal2}</span>`;
-                    if (step.sujud) html += `<span class="transcription">${step.sujud}</span>`;
-                    if (step.jalsa) html += `<span class="transcription">${step.jalsa}</span><p>${step.note2 || ''}</p>`;
-                    if (step.tashahhud) html += `<span class="transcription">${step.tashahhud}</span><p>${step.tashahhud_meaning || ''}</p>`;
-                    if (step.salam) html += `<span class="transcription">${step.salam}</span><span class="transcription">${step.salam2 || ''}</span>`;
-                    if (step.note) html += `<p>${step.note}</p>`;
-                    li.innerHTML = html;
-                    stepsContainer.appendChild(li);
-                });
-            }
-
-            // Суры
-            const surasContainer = document.getElementById('surasContainer');
-            if (t.suras) {
-                surasContainer.innerHTML = '';
-                t.suras.forEach(sura => {
-                    const div = document.createElement('div');
-                    div.className = 'sura-item';
-                    div.innerHTML = `
-                        <h3>${sura.name}</h3>
-                        <div class="arabic-text">${sura.arabic}</div>
-                        <p><strong>Транскрипция:</strong> ${sura.transcription}</p>
-                        <p><strong>Смысл:</strong> ${sura.meaning}</p>
-                    `;
-                    surasContainer.appendChild(div);
-                });
-            }
-
-            // Дуа
-            const duaContainer = document.getElementById('duaContainer');
-            if (t.dua) {
-                duaContainer.innerHTML = '';
-                t.dua.forEach(dua => {
-                    const div = document.createElement('div');
-                    div.className = 'dua-item';
-                    div.innerHTML = `
-                        <h3>${dua.name}</h3>
-                        <div class="arabic-text">${dua.arabic}</div>
-                        <p><strong>Транскрипция:</strong> ${dua.transcription}</p>
-                        <p><strong>Смысл:</strong> ${dua.meaning}</p>
-                    `;
-                    duaContainer.appendChild(div);
-                });
-            }
-
-            // Ресурсы
-            const resourcesList = document.getElementById('resourcesList');
-            if (t.resources) {
-                resourcesList.innerHTML = '';
-                t.resources.forEach(res => {
-                    const li = document.createElement('li');
-                    li.style.marginBottom = '12px';
-                    li.innerHTML = `<a href="${res.url}" target="_blank">${res.name}</a>`;
-                    resourcesList.appendChild(li);
-                });
-            }
-        }
-
-        // ============================================================
-        // ОБРАБОТЧИКИ СОБЫТИЙ
-        // ============================================================
-        document.getElementById('themeToggle').addEventListener('click', function() {
-            setTheme(darkTheme ? 'light' : 'dark');
-        });
-
-        document.getElementById('langSelect').addEventListener('change', function() {
-            setLanguage(this.value);
-        });
-
-        // ============================================================
-        // ПЕРЕКЛЮЧЕНИЕ СТРАНИЦ
-        // ============================================================
-        function switchPage(pageId) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-            const target = document.getElementById('page-' + pageId);
-            if (target) target.classList.add('active');
-            const btn = document.querySelector(`.nav-btn[data-page="${pageId}"]`);
-            if (btn) btn.classList.add('active');
-        }
-
-        document.querySelectorAll('.nav-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                switchPage(this.dataset.page);
-            });
-        });
-
-        // ============================================================
-        // ТАЙМЕР
-        // ============================================================
-        let timerInterval = null;
-        let seconds = 0;
-        const timerDisplay = document.getElementById('timerDisplay');
-        document.getElementById('timerStart').addEventListener('click', function() {
-            if (timerInterval) return;
-            timerInterval = setInterval(() => {
-                seconds++;
-                const m = Math.floor(seconds/60);
-                const s = seconds%60;
-                timerDisplay.textContent = String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
-            }, 1000);
-        });
-        document.getElementById('timerPause').addEventListener('click', function() {
-            if (timerInterval) {
-                clearInterval(timerInterval);
-                timerInterval = null;
-            }
-        });
-        document.getElementById('timerReset').addEventListener('click', function() {
-            if (timerInterval) {
-                clearInterval(timerInterval);
-                timerInterval = null;
-            }
-            seconds = 0;
-            timerDisplay.textContent = '00:00';
-        });
-
-        // ============================================================
-        // ИНИЦИАЛИЗАЦИЯ
-        // ============================================================
-        // Загружаем переводы для текущего языка
-        // Для начала добавим недостающие переводы в объект translations (en, ar)
-        // Для краткости я добавлю только русский, но в реальном коде нужно заполнить все.
-        // Сейчас дадим заглушки, чтобы не было ошибок.
-        if (!translations.en) {
-            translations.en = translations.ru; // временно копируем русский
-        }
-        if (!translations.ar) {
-            translations.ar = translations.ru; // временно
-        }
-
-        applyTranslations(currentLang);
-
-        // Для демонстрации переключения темы и языка всё работает.
-        // Теперь если выбрать другой язык, он переключит тексты.
-        // Но чтобы не было ошибок, мы должны иметь полные переводы.
-        // Я предлагаю в реальном коде добавить английский и арабский переводы,
-        // но это займёт много места. Поэтому я оставлю только русский, а для английского и арабского
-        // можно будет добавить позже.
-        // В данном коде я покажу механику, а вы сможете дополнить переводы.
-
-        // ============================================================
-        // ВЫВОД СООБЩЕНИЯ О НЕДОСТАТКЕ ПЕРЕВОДОВ
-        // ============================================================
-        console.log('Для полной локализации добавьте переводы en и ar в объект translations.');
-    </script>
-</body>
-</html>
+        themeBtn.addEventListener('
