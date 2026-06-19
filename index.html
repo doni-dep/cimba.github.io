@@ -1,581 +1,78 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Изучение Ислама</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90' fill='%232e7d32' font-weight='bold'>﷽</text></svg>" />
-    <style>
-        * { margin:0; padding:0; box-sizing:border-box; }
-        body {
-            font-family: 'Segoe UI', Tahoma, sans-serif;
-            min-height: 100vh;
-            background: #e8f5e9;
-            display: flex;
-            justify-content: center;
-            padding: 20px;
-            transition: background 0.3s, color 0.3s;
-            color: #1e2a1e;
-        }
-        body.dark { background: #121212; color: #e0e0e0; }
-        .card {
-            max-width: 1100px;
-            width: 100%;
-            background: #ffffff;
-            border-radius: 32px;
-            padding: 35px 40px;
-            box-shadow: 0 20px 60px rgba(0,50,0,0.08);
-            margin: 20px 0;
-            border: 1px solid rgba(46,125,50,0.10);
-            transition: background 0.3s, border-color 0.3s, box-shadow 0.3s;
-        }
-        body.dark .card { background: #1e1e1e; border-color: rgba(255,255,255,0.05); box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 12px;
-            margin-bottom: 28px;
-            padding-bottom: 16px;
-            border-bottom: 2px solid #e0f0e0;
-            transition: border-color 0.3s;
-        }
-        body.dark .header { border-bottom-color: #2a2a2a; }
-        .logo-wrapper {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            text-decoration: none;
-        }
-        .logo-icon {
-            width: 48px;
-            height: 48px;
-            background: linear-gradient(135deg, #2e7d32, #66bb6a);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 26px;
-            color: #fff;
-            box-shadow: 0 4px 14px rgba(46,125,50,0.25);
-            transition: transform 0.3s, box-shadow 0.3s;
-            flex-shrink: 0;
-        }
-        body.dark .logo-icon { background: linear-gradient(135deg, #388e3c, #81c784); box-shadow: 0 4px 14px rgba(56,142,60,0.3); }
-        .logo-icon:hover { transform: scale(1.05) rotate(-5deg); }
-        .logo-text {
-            display: flex;
-            flex-direction: column;
-            line-height: 1.1;
-        }
-        .logo-main {
-            font-size: 24px;
-            font-weight: 800;
-            background: linear-gradient(135deg, #1e5a22, #2e7d32, #66bb6a);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            letter-spacing: -0.5px;
-        }
-        body.dark .logo-main { background: linear-gradient(135deg, #81c784, #a5d6a7, #c8e6c9); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .logo-sub {
-            font-size: 11px;
-            color: #5a705a;
-            font-weight: 400;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-        body.dark .logo-sub { color: #889988; }
-        .controls {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-        .theme-btn {
-            background: transparent;
-            border: 1px solid #c0d0c0;
-            border-radius: 30px;
-            padding: 6px 14px;
-            font-size: 18px;
-            cursor: pointer;
-            transition: 0.2s;
-            line-height: 1;
-        }
-        body.dark .theme-btn { border-color: #555; color: #e0e0e0; }
-        .theme-btn:hover { background: rgba(46,125,50,0.08); }
-        .lang-select {
-            padding: 6px 12px;
-            border-radius: 30px;
-            border: 1px solid #c0d0c0;
-            background: transparent;
-            font-size: 14px;
-            font-weight: 500;
-            cursor: pointer;
-            outline: none;
-            transition: 0.2s;
-            color: #1e2a1e;
-        }
-        body.dark .lang-select { border-color: #555; background: #2a2a2a; color: #e0e0e0; }
-        .lang-select:hover { border-color: #2e7d32; }
-        .nav {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-            margin-bottom: 30px;
-            padding-bottom: 12px;
-            border-bottom: 1px solid #e8f0e8;
-            justify-content: center;
-            transition: border-color 0.3s;
-        }
-        body.dark .nav { border-bottom-color: #2a2a2a; }
-        .nav-btn {
-            padding: 8px 22px;
-            border-radius: 40px;
-            border: none;
-            background: transparent;
-            color: #4a5a4a;
-            font-size: 15px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: 0.25s;
-            font-family: inherit;
-        }
-        body.dark .nav-btn { color: #aaa; }
-        .nav-btn:hover { background: #e8f5e9; color: #1a3a1a; }
-        body.dark .nav-btn:hover { background: #2a2a2a; color: #fff; }
-        .nav-btn.active {
-            background: #2e7d32;
-            color: #fff;
-            box-shadow: 0 4px 14px rgba(46,125,50,0.20);
-        }
-        body.dark .nav-btn.active { background: #388e3c; box-shadow: 0 4px 14px rgba(56,142,60,0.3); }
-        .page {
-            display: none;
-            animation: fadeUp 0.35s ease;
-        }
-        .page.active { display: block; }
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(12px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        h1 {
-            font-size: 2.6rem;
-            color: #1e3a1e;
-            margin-bottom: 0.5rem;
-            transition: color 0.3s;
-        }
-        body.dark h1 { color: #c8e6c9; }
-        h2 {
-            font-size: 2.0rem;
-            color: #2e7d32;
-            margin-top: 2rem;
-            margin-bottom: 0.8rem;
-            border-left: 6px solid #f9a825;
-            padding-left: 18px;
-            transition: color 0.3s, border-color 0.3s;
-        }
-        body.dark h2 { color: #66bb6a; border-left-color: #fdd835; }
-        h3 {
-            font-size: 1.5rem;
-            color: #2e5a2e;
-            margin-top: 1.4rem;
-            margin-bottom: 0.4rem;
-            transition: color 0.3s;
-        }
-        body.dark h3 { color: #81c784; }
-        p, li {
-            color: #2d3a2d;
-            line-height: 1.8;
-            margin-bottom: 1rem;
-            transition: color 0.3s;
-        }
-        body.dark p, body.dark li { color: #b0b0b0; }
-        .highlight-box {
-            background: #f1f9f1;
-            border-left: 6px solid #f9a825;
-            padding: 16px 20px;
-            border-radius: 12px;
-            margin: 20px 0;
-            transition: background 0.3s, border-color 0.3s;
-        }
-        body.dark .highlight-box { background: #2a2a2a; border-left-color: #fdd835; }
-        .arabic-text {
-            font-size: 1.8rem;
-            text-align: right;
-            direction: rtl;
-            font-family: 'Amiri', 'Times New Roman', serif;
-            color: #1e3a1e;
-            margin: 12px 0;
-            line-height: 1.9;
-            transition: color 0.3s;
-        }
-        body.dark .arabic-text { color: #c8e6c9; }
-        .transcription {
-            font-style: italic;
-            background: #f0f7f0;
-            padding: 6px 18px;
-            border-radius: 30px;
-            display: inline-block;
-            color: #2d5a2d;
-            font-size: 0.95rem;
-            border: 1px solid #d0e0d0;
-            transition: background 0.3s, color 0.3s, border-color 0.3s;
-        }
-        body.dark .transcription { background: #2a2a2a; color: #b0b0b0; border-color: #444; }
-        .step-list {
-            list-style: none;
-            counter-reset: step-counter;
-        }
-        .step-list li {
-            counter-increment: step-counter;
-            margin-bottom: 18px;
-            padding: 18px 20px;
-            background: #f8fbf8;
-            border-radius: 18px;
-            border: 1px solid #e0ede0;
-            transition: 0.2s, background 0.3s, border-color 0.3s;
-        }
-        body.dark .step-list li { background: #252525; border-color: #333; }
-        .step-list li:hover { background: #f0f7f0; border-color: #b8d0b8; }
-        body.dark .step-list li:hover { background: #2a2a2a; border-color: #555; }
-        .step-list li::before {
-            content: counter(step-counter);
-            background: #2e7d32;
-            color: #fff;
-            font-weight: bold;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            display: inline-block;
-            text-align: center;
-            line-height: 30px;
-            margin-right: 14px;
-            font-size: 0.95rem;
-            box-shadow: 0 4px 10px rgba(46,125,50,0.15);
-        }
-        body.dark .step-list li::before { background: #388e3c; }
-        .step-list li strong {
-            display: inline-block;
-            margin-top: 4px;
-            color: #1e4a1e;
-            transition: color 0.3s;
-        }
-        body.dark .step-list li strong { color: #a5d6a7; }
-        .sura-item, .dua-item {
-            background: #fafcfa;
-            border-radius: 18px;
-            padding: 20px 22px;
-            margin-bottom: 18px;
-            border: 1px solid #dce8dc;
-            transition: 0.2s, background 0.3s, border-color 0.3s;
-        }
-        body.dark .sura-item, body.dark .dua-item { background: #242424; border-color: #333; }
-        .sura-item:hover, .dua-item:hover { background: #f4faf4; border-color: #a8c8a8; }
-        body.dark .sura-item:hover, body.dark .dua-item:hover { background: #2a2a2a; border-color: #555; }
-        .timer-box {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            background: #f8fbf8;
-            border-radius: 24px;
-            padding: 28px;
-            border: 1px solid #dce8dc;
-            margin: 20px 0;
-            transition: background 0.3s, border-color 0.3s;
-        }
-        body.dark .timer-box { background: #242424; border-color: #333; }
-        .timer-display {
-            font-size: 4.5rem;
-            font-weight: 700;
-            font-variant-numeric: tabular-nums;
-            color: #2e7d32;
-            letter-spacing: 4px;
-            margin-bottom: 18px;
-            transition: color 0.3s;
-        }
-        body.dark .timer-display { color: #66bb6a; }
-        .timer-controls {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-        .timer-btn {
-            padding: 10px 28px;
-            border-radius: 40px;
-            border: none;
-            background: #e8f0e8;
-            color: #1e3a1e;
-            font-size: 16px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: 0.2s, background 0.3s, color 0.3s;
-            font-family: inherit;
-        }
-        body.dark .timer-btn { background: #333; color: #ccc; }
-        .timer-btn:hover { background: #d0e4d0; }
-        body.dark .timer-btn:hover { background: #444; }
-        .timer-btn.start {
-            background: #2e7d32;
-            color: #fff;
-        }
-        body.dark .timer-btn.start { background: #388e3c; }
-        .timer-btn.start:hover { background: #1e5a22; }
-        body.dark .timer-btn.start:hover { background: #2e7d32; }
-        a {
-            color: #2e7d32;
-            text-decoration: none;
-            border-bottom: 1px dotted #8aa88a;
-            transition: color 0.3s, border-color 0.3s;
-        }
-        body.dark a { color: #81c784; border-bottom-color: #555; }
-        a:hover { color: #1a4a1a; border-bottom: 1px solid #2e7d32; }
-        body.dark a:hover { color: #a5d6a7; border-bottom-color: #66bb6a; }
-        .footer {
-            margin-top: 45px;
-            padding-top: 20px;
-            border-top: 1px solid #dce8dc;
-            text-align: center;
-            font-size: 14px;
-            color: #5a705a;
-            transition: border-color 0.3s, color 0.3s;
-        }
-        body.dark .footer { border-top-color: #333; color: #777; }
-        @media (max-width: 600px) {
-            .card { padding: 20px 16px; }
-            h1 { font-size: 2.0rem; }
-            h2 { font-size: 1.6rem; }
-            .nav-btn { font-size: 13px; padding: 6px 14px; }
-            .arabic-text { font-size: 1.4rem; }
-            .timer-display { font-size: 3.0rem; }
-            .logo-main { font-size: 18px; }
-            .logo-icon { width: 38px; height: 38px; font-size: 20px; }
-            .logo-sub { font-size: 9px; }
-        }
-    </style>
-</head>
-<body>
-    <div class="card">
-        <!-- ШАПКА -->
-        <div class="header">
-            <div class="logo-wrapper">
-                <div class="logo-icon">﷽</div>
-                <div class="logo-text">
-                    <span class="logo-main">Изучение Ислама</span>
-                    <span class="logo-sub">Руководство для начинающих</span>
-                </div>
-            </div>
-            <div class="controls">
-                <button class="theme-btn" id="themeToggle">🌙</button>
-                <select class="lang-select" id="langSelect">
-                    <option value="ru">Русский</option>
-                    <option value="en">English</option>
-                    <option value="ar">العربية</option>
-                </select>
-            </div>
-        </div>
+<!-- НАМАЗ (ХАНАФИЙСКИЙ МАЗХАБ) -->
+<div class="page" id="page-namaz">
+    <h2>Намаз по ханафитскому мазхабу</h2>
+    <p>Ниже приведено подробное руководство по совершению пяти обязательных намазов согласно ханафитскому мазхабу (по учёному Абу Ханифе).</p>
 
-        <!-- МЕНЮ -->
-        <div class="nav">
-            <button class="nav-btn active" data-page="home">Главная</button>
-            <button class="nav-btn" data-page="namaz">Намаз</button>
-            <button class="nav-btn" data-page="suras">Суры</button>
-            <button class="nav-btn" data-page="dua">Дуа</button>
-            <button class="nav-btn" data-page="timer">Таймер</button>
-            <button class="nav-btn" data-page="resources">Ресурсы</button>
-        </div>
-
-        <!-- СТРАНИЦЫ -->
-        <div class="page active" id="page-home">
-            <div style="text-align:center; padding:15px 0;">
-                <div style="font-size: 90px; margin-bottom: 8px;">🕌</div>
-                <h1>Добро пожаловать</h1>
-                <p style="font-size: 1.2rem; max-width: 600px; margin: 0 auto 20px;">
-                    Это руководство поможет вам научиться совершать намаз, изучать суры и дуа.<br>
-                    Начните с малого, и Аллах облегчит ваш путь.
-                </p>
-                <div style="display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;">
-                    <button class="nav-btn" style="background:#2e7d32; color:#fff; padding:12px 36px; font-weight:600; border-radius:40px;" onclick="switchPage('namaz')">Начать обучение</button>
-                    <button class="nav-btn" style="border:1px solid #2e7d32; padding:12px 36px; font-weight:500;" onclick="switchPage('suras')">Изучить суры</button>
-                </div>
-            </div>
-        </div>
-
-        <div class="page" id="page-namaz">
-            <h2>Как совершать намаз (пошагово)</h2>
-            <p>Намаз – это основа религии. Ниже приведена подробная инструкция для выполнения двух ракаатов намаза.</p>
-            <ul class="step-list">
-                <li><strong>1. Намерение (Ният)</strong><p>Сделайте намерение в сердце совершить конкретный намаз (например, утренний фаджр).</p><span class="transcription">«Я намерился совершить два ракаата (фарз) сегодняшнего утреннего намаза ради Аллаха».</span></li>
-                <li><strong>2. Такбир</strong><p>Поднимите руки до ушей и скажите:</p><div class="arabic-text">اَللهُ أَكْبَرُ</div><span class="transcription">«Аллаху Акбар» (Аллах – Велик).</span></li>
-                <li><strong>3. Дуа «Сана»</strong><div class="arabic-text">سُبْحَانَكَ اللَّهُمَّ وَبِحَمْدِكَ، وَتَبَارَكَ اسْمُكَ، وَتَعَالَى جَدُّكَ، وَلَا إِلَهَ غَيْرُكَ</div><span class="transcription">«СубханакаЛлахумма ва бихамдика...»</span><p>«О Аллах, пречист Ты и хвала Тебе...»</p></li>
-                <li><strong>4. Чтение «Аль-Фатиха»</strong><div class="arabic-text">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ (١) الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ (٢) ...</div><span class="transcription">«БисмиЛляхИр-Рахманир-Рахим...»</span></li>
-                <li><strong>5. Чтение дополнительной суры</strong><span class="transcription">(например, «Аль-Ихляс» — см. раздел «Суры»).</span></li>
-                <li><strong>6. Поясной поклон (Руку')</strong><span class="transcription">«Субхана раббийаль-‘азым» (3 раза).</span></li>
-                <li><strong>7. Выпрямление</strong><span class="transcription">«Сами'аЛлаху лиман хамидах»</span><span class="transcription">«Раббана ва лякаль-хамд»</span></li>
-                <li><strong>8. Земной поклон (Суджуд)</strong><span class="transcription">«Субхана раббийаль-а‘ля» (3 раза).</span></li>
-                <li><strong>9. Сидение между суджудами</strong><span class="transcription">«Рабби гфир ли»</span></li>
-                <li><strong>10. Второй земной поклон</strong><span class="transcription">(повторить шаг 8).</span></li>
-                <li><strong>11. Завершение</strong><span class="transcription">«Ат-тахиййату лиЛляхи...»</span><span class="transcription">Затем: «Ассаляму ‘алейкум ва рахматуЛлах» (вправо и влево).</span></li>
-            </ul>
-            <div class="highlight-box"><strong>💡 Важно:</strong> Это базовая схема для начинающих. Для углублённого изучения обращайтесь к проверенным источникам.</div>
-        </div>
-
-        <div class="page" id="page-suras">
-            <h2>Короткие суры для намаза</h2>
-            <p>Читайте эти суры после «Аль-Фатиха» в каждом ракаате.</p>
-            <div class="sura-item">
-                <h3>Сура «Аль-Ихляс» (112)</h3>
-                <div class="arabic-text">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ<br>قُلْ هُوَ اللَّهُ أَحَدٌ ﴿١﴾ اللَّهُ الصَّمَدُ ﴿٢﴾ لَمْ يَلِدْ وَلَمْ يُولَدْ ﴿٣﴾ وَلَمْ يَكُن لَّهُ كُفُوًا أَحَدٌ ﴿٤﴾</div>
-                <p><strong>Транскрипция:</strong> БисмиЛляхИр-Рахманир-Рахим. Куль хуваЛлаху ахад. Аллаху с-самад. Лам ялид ва лам юляд. Ва лам якуль-ляху куфуван ахад.</p>
-                <p><strong>Смысл:</strong> «Он — Аллах Единый, Самодостаточный. Не родил и не был рождён, и нет никого равного Ему».</p>
-            </div>
-            <div class="sura-item">
-                <h3>Сура «Аль-Фалак» (113)</h3>
-                <div class="arabic-text">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ<br>قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ ﴿١﴾ مِن شَرِّ مَا خَلَقَ ﴿٢﴾ وَمِن شَرِّ غَاسِقٍ إِذَا وَقَبَ ﴿٣﴾ وَمِن شَرِّ النَّفَّاثَاتِ فِي الْعُقَدِ ﴿٤﴾ وَمِن شَرِّ حَاسِدٍ إِذَا حَسَدَ ﴿٥﴾</div>
-                <p><strong>Транскрипция:</strong> БисмиЛляхИр-Рахманир-Рахим. Куль а'узу би раббиль-фаляк. Мин шарри ма халяк. Ва мин шарри гасикын иза вакаб. Ва мин шарри наффасати филь-укад. Ва мин шарри хасидин иза хасад.</p>
-                <p><strong>Смысл:</strong> «Прибегаю к защите Господа рассвета от зла сотворённого, от зла мрака, от зла колдуний, от зла завистника».</p>
-            </div>
-            <div class="sura-item">
-                <h3>Сура «Ан-Нас» (114)</h3>
-                <div class="arabic-text">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ<br>قُلْ أَعُوذُ بِرَبِّ النَّاسِ ﴿١﴾ مَلِكِ النَّاسِ ﴿٢﴾ إِلَٰهِ النَّاسِ ﴿٣﴾ مِن شَرِّ الْوَسْوَاسِ الْخَنَّاسِ ﴿٤﴾ الَّذِي يُوَسْوِسُ فِي صُدُورِ النَّاسِ ﴿٥﴾ مِنَ الْجِنَّةِ وَالنَّاسِ ﴿٦﴾</div>
-                <p><strong>Транскрипция:</strong> БисмиЛляхИр-Рахманир-Рахим. Куль а'узу би рабби-н-нас. Малики-н-нас. Иляхи-н-нас. Мин шарри-ль-васваси-ль-ханнас. Аллязи ювасвису фи судури-н-нас. Мина-ль-джиннати ва-н-нас.</p>
-                <p><strong>Смысл:</strong> «Прибегаю к защите Господа людей, Царя людей, Бога людей, от зла искусителя, из числа джиннов и людей».</p>
-            </div>
-            <div class="highlight-box"><strong>📖 Совет:</strong> Заучивайте эти суры постепенно – по одной в день. Повторяйте их в намазе, и Аллах облегчит вам запоминание.</div>
-        </div>
-
-        <div class="page" id="page-dua">
-            <h2>Дуа (мольбы) для разных случаев</h2>
-            <div class="dua-item">
-                <h3>Перед едой</h3>
-                <div class="arabic-text">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
-                <p><strong>Транскрипция:</strong> БисмиЛляхИр-Рахманир-Рахим.</p>
-                <p><strong>Смысл:</strong> «С именем Аллаха, Милостивого, Милосердного».</p>
-            </div>
-            <div class="dua-item">
-                <h3>После еды</h3>
-                <div class="arabic-text">الْحَمْدُ لِلَّهِ الَّذِي أَطْعَمَنِي هَذَا وَرَزَقَنِيهِ مِنْ غَيْرِ حَوْلٍ مِنِّي وَلَا قُوَّةٍ</div>
-                <p><strong>Транскрипция:</strong> Аль-хамду лиЛляхи ллязи ат'амани хаза ва разаканихи мин гайри хаулин минни ва ла кувва.</p>
-                <p><strong>Смысл:</strong> «Хвала Аллаху, Который накормил меня этим и наделил меня этим без моей силы и мощи».</p>
-            </div>
-            <div class="dua-item">
-                <h3>За родителей</h3>
-                <div class="arabic-text">رَبِّ ارْحَمْهُمَا كَمَا رَبَّيَانِي صَغِيرًا</div>
-                <p><strong>Транскрипция:</strong> Раббир-хамхума кама раббаяни сагира.</p>
-                <p><strong>Смысл:</strong> «Господи, помилуй их, как они воспитали меня маленьким».</p>
-            </div>
-            <div class="highlight-box"><strong>🤲 Дуа:</strong> «Господи, прими наши мольбы и сделай нас из числа тех, кто следует прямым путём». Аминь.</div>
-        </div>
-
-        <div class="page" id="page-timer">
-            <h2>Таймер для чтения</h2>
-            <p>Используйте таймер для отсчёта времени при чтении Корана или дуа.</p>
-            <div class="timer-box">
-                <div class="timer-display" id="timerDisplay">00:00</div>
-                <div class="timer-controls">
-                    <button class="timer-btn start" id="timerStart">▶ Старт</button>
-                    <button class="timer-btn" id="timerPause">⏸ Пауза</button>
-                    <button class="timer-btn" id="timerReset">⏹ Сброс</button>
-                </div>
-            </div>
-        </div>
-
-        <div class="page" id="page-resources">
-            <h2>Полезные ресурсы</h2>
-            <ul style="list-style:none; padding-left:0;">
-                <li style="margin-bottom:12px;">📖 <a href="https://quran.com/ru" target="_blank">Quran.com — Коран с переводом</a></li>
-                <li style="margin-bottom:12px;">🕌 <a href="https://www.islamweb.net/ru/" target="_blank">IslamWeb — статьи и ответы</a></li>
-                <li style="margin-bottom:12px;">🎥 <a href="https://www.youtube.com/results?search_query=%D0%BE%D0%B1%D1%83%D1%87%D0%B5%D0%BD%D0%B8%D0%B5+%D0%BD%D0%B0%D0%BC%D0%B0%D0%B7%D1%83" target="_blank">Видеоуроки по намазу</a></li>
-                <li style="margin-bottom:12px;">📱 <a href="https://play.google.com/store/search?q=%D0%BD%D0%B0%D0%BC%D0%B0%D0%B7&c=apps" target="_blank">Приложения для изучения намаза</a></li>
-            </ul>
-            <div class="highlight-box"><strong>🤲 Дуа:</strong> «Господи, облегчи мне путь к знанию». Аминь.</div>
-        </div>
-
-        <div class="footer">Сделано с ❤️ для изучающих Ислам. Пусть Аллах примет наши старания.</div>
+    <!-- ===== 1. ФАДЖР ===== -->
+    <h3>1. Утренний намаз (Фаджр) — 2 ракаата сунны, 2 ракаата фарза</h3>
+    <div class="highlight-box">
+        <strong>📌 Особенности ханафи:</strong> В первом ракаате после «Аль-Фатихи» читается короткая сура (например, «Аль-Ихляс»). Во втором ракаате — другая короткая сура. Руки во время такбира поднимаются до ушей.
     </div>
+    <ul class="step-list">
+        <li><strong>1. Намерение (Ният)</strong><p>«Я намерился совершить 2 ракаата сунны утреннего намаза (Фаджр) ради Аллаха».</p></li>
+        <li><strong>2. Такбир (вступление)</strong><p>Поднимите руки до ушей (мужчины — до мочек, женщины — до плеч) и скажите:</p><div class="arabic-text">اَللهُ أَكْبَرُ</div><span class="transcription">«Аллаху Акбар»</span></li>
+        <li><strong>3. Дуа «Сана»</strong><div class="arabic-text">سُبْحَانَكَ اللَّهُمَّ وَبِحَمْدِكَ، وَتَبَارَكَ اسْمُكَ، وَتَعَالَى جَدُّكَ، وَلَا إِلَهَ غَيْرُكَ</div><span class="transcription">«СубханакаЛлахумма ва бихамдика, ва табаракасмука, ва та'аля джаддука, ва ла илаха гайрук».</span><p>Затем читаете «А'узу биЛляхи...» и «БисмиЛлях...» (про себя).</p></li>
+        <li><strong>4. Чтение «Аль-Фатиха» и суры</strong><div class="arabic-text">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ (١) الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ (٢) ...</div><span class="transcription">«БисмиЛляхИр-Рахманир-Рахим...»</span><p>После «Аль-Фатихи» читаете любую короткую суру (например, «Аль-Ихляс»).</p></li>
+        <li><strong>5. Поясной поклон (Руку')</strong><p>Со словами «Аллаху Акбар» наклонитесь, положив руки на колени. Скажите <strong>три раза</strong>:</p><span class="transcription">«Субхана раббийаль-‘азым»</span></li>
+        <li><strong>6. Выпрямление</strong><p>Поднимитесь со словами:</p><span class="transcription">«Сами'аЛлаху лиман хамидах»</span><p>Затем, стоя, скажите:</p><span class="transcription">«Раббана ва лякаль-хамд»</span></li>
+        <li><strong>7. Первый земной поклон (Суджуд)</strong><p>Со словами «Аллаху Акбар» опуститесь на колени, коснитесь лбом и носом пола. Скажите <strong>три раза</strong>:</p><span class="transcription">«Субхана раббийаль-а‘ля»</span></li>
+        <li><strong>8. Сидение между суджудами</strong><p>Сядьте на колени и скажите:</p><span class="transcription">«Рабби гфир ли»</span></li>
+        <li><strong>9. Второй земной поклон</strong><p>Повторите шаг 7.</p></li>
+        <li><strong>10. Второй ракаат</strong><p>Встаньте, повторите шаги 4–9. Во втором ракаате читаете другую суру (например, «Аль-Фалак»).</p></li>
+        <li><strong>11. Сидение для Ташаххуда</strong><p>После второго ракаата сядьте и прочитайте «Ташаххуд» (по ханафи):</p><span class="transcription">«Ат-тахиййату лиЛляхи ва-с-салавату ва-т-таййибат. Ассаляму ‘алейка айюхан-набийю ва рахматуЛлахи ва баракатух. Ассаляму ‘алейна ва ‘аля ‘ибадиЛляхи с-салихин. Ашхаду алля илаха илляЛлаху ва ашхаду анна Мухаммадан ‘абдуху ва расулюх».</span></li>
+        <li><strong>12. Завершение (Салам)</strong><p>Поверните голову вправо и скажите:</p><span class="transcription">«Ассаляму ‘алейкум ва рахматуЛлах»</span><p>Затем влево, повторяя то же самое.</p></li>
+    </ul>
+    <p style="margin-top:10px;"><strong>Фарз (2 ракаата):</strong> Повторяете всё то же самое, но с намерением «фарз». После сур читаете «Аль-Фатиха» и суру только в первых двух ракаатах.</p>
 
-    <script>
-        // ============================================================
-        // ПЕРЕКЛЮЧЕНИЕ СТРАНИЦ
-        // ============================================================
-        function switchPage(pageId) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-            const target = document.getElementById('page-' + pageId);
-            if (target) target.classList.add('active');
-            const btn = document.querySelector(`.nav-btn[data-page="${pageId}"]`);
-            if (btn) btn.classList.add('active');
-        }
+    <!-- ===== 2. ЗУХР ===== -->
+    <h3>2. Обеденный намаз (Зухр) — 4 ракаата сунны, 4 ракаата фарза, 2 ракаата сунны</h3>
+    <div class="highlight-box">
+        <strong>📌 Особенности ханафи:</strong> В первых двух ракаатах фарза читаются суры, в третьем и четвёртом — только «Аль-Фатиха».
+    </div>
+    <ul class="step-list">
+        <li><strong>1. Намерение (4 ракаата сунны):</strong> «Я намерился совершить 4 ракаата сунны обеденного намаза (Зухр) ради Аллаха».</li>
+        <li><strong>2–11:</strong> Повторяете шаги 2–11 из Фаджра, но делаете 4 ракаата (2+2 с Ташаххудом после второго ракаата и полным Ташаххудом после четвёртого).</li>
+        <li><strong>12. Фарз (4 ракаата):</strong> С намерением «фарз». В первых двух ракаатах читаете «Аль-Фатиха» + сура, в третьем и четвёртом — только «Аль-Фатиха».</li>
+        <li><strong>13. Сунна (2 ракаата):</strong> Повторяете как Фаджр, но с намерением «сунна».</li>
+    </ul>
 
-        document.querySelectorAll('.nav-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                switchPage(this.dataset.page);
-            });
-        });
+    <!-- ===== 3. АСР ===== -->
+    <h3>3. Послеобеденный намаз (Аср) — 4 ракаата фарза</h3>
+    <div class="highlight-box">
+        <strong>📌 Особенности ханафи:</strong> Время Аср наступает, когда тень от предмета становится в два раза больше его длины (кроме тени в полдень).
+    </div>
+    <ul class="step-list">
+        <li><strong>1. Намерение:</strong> «Я намерился совершить 4 ракаата фарза послеобеденного намаза (Аср) ради Аллаха».</li>
+        <li><strong>2–11:</strong> Повторяете шаги 2–11 из Фаджра, но делаете 4 ракаата. В первых двух — «Аль-Фатиха» + сура, в третьем и четвёртом — только «Аль-Фатиха».</li>
+    </ul>
 
-        // ============================================================
-        // ТАЙМЕР
-        // ============================================================
-        let timerInterval = null;
-        let seconds = 0;
-        const timerDisplay = document.getElementById('timerDisplay');
+    <!-- ===== 4. МАГРИБ ===== -->
+    <h3>4. Вечерний намаз (Магриб) — 3 ракаата фарза, 2 ракаата сунны</h3>
+    <div class="highlight-box">
+        <strong>📌 Особенности ханафи:</strong> Магриб состоит из 3 ракаатов фарза. В первых двух читаются суры, в третьем — только «Аль-Фатиха».
+    </div>
+    <ul class="step-list">
+        <li><strong>1. Намерение:</strong> «Я намерился совершить 3 ракаата фарза вечернего намаза (Магриб) ради Аллаха».</li>
+        <li><strong>2–9:</strong> Повторяете шаги 2–9 из Фаджра для первого ракаата.</li>
+        <li><strong>10. Второй ракаат:</strong> Повторяете, читаете «Аль-Фатиха» + сура.</li>
+        <li><strong>11. Третий ракаат:</strong> После «Аль-Фатихи» суру не читаете (только «Аль-Фатиха»).</li>
+        <li><strong>12. Ташаххуд и Салам:</strong> После третьего ракаата читаете полный Ташаххуд и Салам.</li>
+        <li><strong>13. Сунна (2 ракаата):</strong> Повторяете как Фаджр с намерением «сунна».</li>
+    </ul>
 
-        document.getElementById('timerStart').addEventListener('click', function() {
-            if (timerInterval) return;
-            timerInterval = setInterval(() => {
-                seconds++;
-                const m = Math.floor(seconds / 60);
-                const s = seconds % 60;
-                timerDisplay.textContent = String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
-            }, 1000);
-        });
+    <!-- ===== 5. ИША ===== -->
+    <h3>5. Ночной намаз (Иша) — 4 ракаата фарза, 2 ракаата сунны, 3 ракаата витра</h3>
+    <div class="highlight-box">
+        <strong>📌 Особенности ханафи:</strong> Витр — 3 ракаата с дуа «Кунут» в третьем ракаате.
+    </div>
+    <ul class="step-list">
+        <li><strong>1. Намерение (4 ракаата фарза):</strong> «Я намерился совершить 4 ракаата фарза ночного намаза (Иша) ради Аллаха».</li>
+        <li><strong>2–11:</strong> Повторяете шаги 2–11 из Зухра для фарза.</li>
+        <li><strong>12. Сунна (2 ракаата):</strong> Как Фаджр с намерением «сунна».</li>
+        <li><strong>13. Витр (3 ракаата):</strong> «Я намерился совершить 3 ракаата витра ради Аллаха». В третьем ракаате после «Аль-Фатихи» и суры поднимаете руки и читаете дуа «Кунут».</li>
+    </ul>
 
-        document.getElementById('timerPause').addEventListener('click', function() {
-            if (timerInterval) {
-                clearInterval(timerInterval);
-                timerInterval = null;
-            }
-        });
-
-        document.getElementById('timerReset').addEventListener('click', function() {
-            if (timerInterval) {
-                clearInterval(timerInterval);
-                timerInterval = null;
-            }
-            seconds = 0;
-            timerDisplay.textContent = '00:00';
-        });
-
-        // ============================================================
-        // ТЕМА
-        // ============================================================
-        const themeBtn = document.getElementById('themeToggle');
-        const body = document.body;
-        let dark = localStorage.getItem('theme') === 'dark';
-
-        if (dark) body.classList.add('dark');
-        themeBtn.textContent = dark ? '☀️' : '🌙';
-
-        themeBtn.addEventListener('click', function() {
-            dark = !dark;
-            body.classList.toggle('dark', dark);
-            themeBtn.textContent = dark ? '☀️' : '🌙';
-            localStorage.setItem('theme', dark ? 'dark' : 'light');
-        });
-
-        // ============================================================
-        // ЯЗЫК (заглушка)
-        // ============================================================
-        document.getElementById('langSelect').addEventListener('change', function() {
-            const lang = this.value;
-            localStorage.setItem('lang', lang);
-            alert('Язык изменён на: ' + (lang === 'ru' ? 'Русский' : lang === 'en' ? 'English' : 'العربية'));
-        });
-
-        // Загружаем сохранённый язык
-        const savedLang = localStorage.getItem('lang') || 'ru';
-        document.getElementById('langSelect').value = savedLang;
-    </script>
-</body>
-</html>
+    <div class="highlight-box">
+        <strong>💡 Важно:</strong> Это руководство основано на ханафитском мазхабе. Для полного изучения обратитесь к знающим людям и проверенным книгам по фикху.
+    </div>
+</div>
